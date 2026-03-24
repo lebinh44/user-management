@@ -1,5 +1,5 @@
 import axios from "axios";
-import { User } from "../features/user/types";
+import { Album, Post, User } from "../features/user/types";
 
 export const API_BASE_URL = "https://jsonplaceholder.typicode.com";
 
@@ -32,5 +32,15 @@ export const updateUser = async (id: number, data: Partial<User>) => {
 
 export const deleteUser = async (id: number) => {
   const response = await api.delete(`/users/${id}`);
+  return response.data;
+};
+
+export const getUserPosts = async (id: number) => {
+  const response = await api.get<Post[]>(`/users/${id}/posts`);
+  return response.data;
+};
+
+export const getUserAlbums = async (id: number) => {
+  const response = await api.get<Album[]>(`/users/${id}/albums`);
   return response.data;
 };
