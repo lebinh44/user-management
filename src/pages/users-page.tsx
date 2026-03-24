@@ -3,6 +3,8 @@ import UserCard from "@/features/user/components/user-card";
 import { SortType, useUserStore } from "@/store/user-store";
 import { useUserFilter } from "@/features/user/hooks/use-user-filter";
 import { useDebounce } from "@/features/user/hooks/use-debounce";
+import { UserFormValues } from "@/features/user/types";
+import { useCreateUser } from "@/features/user/hooks/use-user-mutation";
 
 export default function UsersPage() {
   const { data, isLoading, error } = useUsers();
@@ -12,6 +14,17 @@ export default function UsersPage() {
   const debouncedSearch = useDebounce(search, 300);
 
   const users = useUserFilter(data || [], debouncedSearch, sort);
+  const createMutation = useCreateUser();
+
+  const handleCreateUser = (data: UserFormValues) => {
+    createMutation.mutate({
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        website: data.website,
+        company: { name: data.company },
+    }
+}
 
   if (isLoading) {
     return <div className="p-6 text-center">Loading...</div>;

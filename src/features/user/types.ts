@@ -21,3 +21,11 @@ export interface Album {
   userId: number;
   title: string;
 }
+
+export interface UserFormValues {
+  name: string;
+  email: string;
+  phone?: string;
+  website?: string;
+  companyName: string;
+}
