@@ -79,3 +79,47 @@ export const useDeleteUser = () => {
     },
   });
 };
+
+export const useUpdateUser = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ id, data }: { id: number; data: Partial<User> }) =>
+      updateUser(id, data),
+
+    onMutate: async ({ id, data }) => {
+      await queryClient.cancelQueries({ queryKey: ["users"] });
+
+      const previousUsers = queryClient.getQueryData<User[]>(["users"]);
+
+      if (previousUsers) {
+        queryClient.setQueryData<User[]>(
+          ["users"],
+          previousUsers.map((u) =>
+            u.id === id
+              ? {
+                  ...u,
+                  ...data,
+                  company: {
+                    name: data.company?.name || u.company.name,
+                  },
+                }
+              : u
+          )
+        );
+      }
+
+      return { previousUsers };
+    },
+
+    onError: (_err, _vars, context) => {
+      if (context?.previousUsers) {
+        queryClient.setQueryData(["users"], context.previousUsers);
+      }
+    },
+
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["users"] });
+    },
+  });
+};
