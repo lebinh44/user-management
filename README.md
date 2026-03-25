@@ -11,18 +11,16 @@ Currently, two official plugins are available:
 
 First, Clone repo:
 
-````bash
+```bash
 git clone https://github.com/<your-username>/user-management.git
 cd user-management
 
-Install dependencies:
-```bash
+# Install dependencies:
 npm install
 
-Run development server:
-```bash
+# Run development server:
 npm run dev
-````
+```
 
 Open [http://localhost:5173/users](http://localhost:5173/users) with your browser to see the result.
 
