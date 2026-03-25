@@ -24,7 +24,6 @@ export default function UserDetailPage() {
 
   return (
     <div className="p-6 space-y-6">
-      {/* Back */}
       <button
         onClick={() => navigate(-1)}
         className="text-primary hover:underline"
@@ -32,7 +31,6 @@ export default function UserDetailPage() {
         ← Back
       </button>
 
-      {/* User Info */}
       <div className="border rounded-xl p-4 shadow-sm">
         <h1 className="text-2xl font-bold">{user.name}</h1>
         <p className="text-gray-500">{user.email}</p>
@@ -50,27 +48,27 @@ export default function UserDetailPage() {
         </div>
       </div>
 
-      {/* Posts */}
-      <div>
-        <h2 className="text-xl font-semibold mb-2">Posts</h2>
-        <div className="space-y-2">
-          {posts?.slice(0, 5).map((post: Post) => (
-            <div key={post.id} className="border p-3 rounded">
-              <p className="font-medium">{post.title}</p>
-            </div>
-          ))}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <h2 className="text-xl font-semibold mb-2">Posts</h2>
+          <div className="space-y-2">
+            {posts?.slice(0, 5).map((post: Post) => (
+              <div key={post.id} className="border p-3 rounded">
+                <p className="font-medium">{post.title}</p>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
 
-      {/* Albums */}
-      <div>
-        <h2 className="text-xl font-semibold mb-2">Albums</h2>
-        <div className="space-y-2">
-          {albums?.slice(0, 5).map((album: Album) => (
-            <div key={album.id} className="border p-3 rounded">
-              {album.title}
-            </div>
-          ))}
+        <div>
+          <h2 className="text-xl font-semibold mb-2">Albums</h2>
+          <div className="space-y-2">
+            {albums?.slice(0, 5).map((album: Album) => (
+              <div key={album.id} className="border p-3 rounded">
+                {album.title}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
