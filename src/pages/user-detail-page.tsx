@@ -1,18 +1,48 @@
+import { useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useUserDetail } from "@/features/user/hooks/use-user-detail";
-import { useUserPosts } from "@/features/user/hooks/use-user-posts";
-import { useUserAlbums } from "@/features/user/hooks/use-user-albums";
-import { Album, Post } from "@/features/user/types";
+import { useInfiniteUserPosts } from "@/features/user/hooks/use-infinite-user-posts";
+import { useInfiniteUserAlbums } from "@/features/user/hooks/use-infinite-user-albums";
+import { Post, Album } from "@/features/user/types";
+import useIntersectionObserver from "@/features/user/hooks/use-intersection-observer";
 
 export default function UserDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();
-
   const userId = Number(id);
 
   const { data: user, isLoading, error } = useUserDetail(userId);
-  const { data: posts } = useUserPosts(userId);
-  const { data: albums } = useUserAlbums(userId);
+
+  const {
+    data: postsData,
+    isLoading: postsLoading,
+    isFetchingNextPage: postsFetchingMore,
+    fetchNextPage: fetchMorePosts,
+    hasNextPage: hasMorePosts,
+  } = useInfiniteUserPosts(userId);
+
+  const {
+    data: albumsData,
+    isLoading: albumsLoading,
+    isFetchingNextPage: albumsFetchingMore,
+    fetchNextPage: fetchMoreAlbums,
+    hasNextPage: hasMoreAlbums,
+  } = useInfiniteUserAlbums(userId);
+
+  const postsBottomRef = useRef<HTMLDivElement>(null);
+  const albumsBottomRef = useRef<HTMLDivElement>(null);
+
+  useIntersectionObserver(
+    postsBottomRef,
+    fetchMorePosts,
+    !!hasMorePosts && !postsFetchingMore
+  );
+
+  useIntersectionObserver(
+    albumsBottomRef,
+    fetchMoreAlbums,
+    !!hasMoreAlbums && !albumsFetchingMore
+  );
 
   if (isLoading) {
     return <div className="p-6 text-center">Loading...</div>;
@@ -21,6 +51,9 @@ export default function UserDetailPage() {
   if (error || !user) {
     return <div className="p-6 text-center text-red-500">User not found</div>;
   }
+
+  const posts = postsData?.items ?? [];
+  const albums = albumsData?.items ?? [];
 
   return (
     <div className="p-6 space-y-6">
@@ -49,26 +82,58 @@ export default function UserDetailPage() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Posts column */}
         <div>
           <h2 className="text-xl font-semibold mb-2">Posts</h2>
-          <div className="space-y-2">
-            {posts?.slice(0, 5).map((post: Post) => (
-              <div key={post.id} className="border p-3 rounded">
-                <p className="font-medium">{post.title}</p>
-              </div>
-            ))}
-          </div>
+          {postsLoading ? (
+            <div className="text-center text-gray-400 py-4">Loading...</div>
+          ) : (
+            <div className="space-y-2">
+              {posts.map((post: Post) => (
+                <div key={post.id} className="border p-3 rounded">
+                  <p className="font-medium">{post.title}</p>
+                </div>
+              ))}
+              <div ref={postsBottomRef} className="h-1" />
+              {postsFetchingMore && (
+                <div className="text-center text-gray-400 py-2 text-sm">
+                  Loading more...
+                </div>
+              )}
+              {!hasMorePosts && posts.length > 0 && (
+                <div className="text-center text-gray-400 py-2 text-sm">
+                  No more posts
+                </div>
+              )}
+            </div>
+          )}
         </div>
 
+        {/* Albums column */}
         <div>
           <h2 className="text-xl font-semibold mb-2">Albums</h2>
-          <div className="space-y-2">
-            {albums?.slice(0, 5).map((album: Album) => (
-              <div key={album.id} className="border p-3 rounded">
-                {album.title}
-              </div>
-            ))}
-          </div>
+          {albumsLoading ? (
+            <div className="text-center text-gray-400 py-4">Loading...</div>
+          ) : (
+            <div className="space-y-2">
+              {albums.map((album: Album) => (
+                <div key={album.id} className="border p-3 rounded">
+                  {album.title}
+                </div>
+              ))}
+              <div ref={albumsBottomRef} className="h-1" />
+              {albumsFetchingMore && (
+                <div className="text-center text-gray-400 py-2 text-sm">
+                  Loading more...
+                </div>
+              )}
+              {!hasMoreAlbums && albums.length > 0 && (
+                <div className="text-center text-gray-400 py-2 text-sm">
+                  No more albums
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>

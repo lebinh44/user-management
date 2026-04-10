@@ -47,3 +47,25 @@ export const getUserAlbums = async (id: number) => {
   const response = await api.get<Album[]>(`/users/${id}/albums`);
   return response.data;
 };
+
+export const getUserPostsPaginated = async (
+  id: number,
+  page: number,
+  limit: number
+): Promise<Post[]> => {
+  const response = await api.get<Post[]>(`/users/${id}/posts`, {
+    params: { _page: page, _limit: limit },
+  });
+  return response.data;
+};
+
+export const getUserAlbumsPaginated = async (
+  id: number,
+  page: number,
+  limit: number
+): Promise<Album[]> => {
+  const response = await api.get<Album[]>(`/users/${id}/albums`, {
+    params: { _page: page, _limit: limit },
+  });
+  return response.data;
+};

@@ -40,20 +40,25 @@ export default function UserForm({
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-3">
       {/* Name */}
-      <label className="block font-medium">Name</label>
+      <label htmlFor="name" className="block font-medium">
+        Name
+      </label>
       <input
+        id="name"
         placeholder="Name*"
         {...register("name", {
           required: "Name is required",
           minLength: { value: 2, message: "Min 2 chars" },
         })}
         className="border p-2 w-full rounded"
-        disabled={isSubmitting}
       />
       {errors.name && <p className="text-red-500">{errors.name.message}</p>}
       {/* Email */}
-      <label className="block font-medium">Email</label>
+      <label htmlFor="email" className="block font-medium">
+        Email
+      </label>
       <input
+        id="email"
         placeholder="Email*"
         {...register("email", {
           required: "Email is required",
@@ -63,12 +68,14 @@ export default function UserForm({
           },
         })}
         className="border p-2 w-full rounded"
-        disabled={isSubmitting}
       />
       {errors.email && <p className="text-red-500">{errors.email.message}</p>}
       {/* Phone */}
-      <label className="block font-medium">Phone</label>
+      <label htmlFor="Phone" className="block font-medium">
+        Phone
+      </label>
       <input
+        id="Phone"
         placeholder="Phone"
         {...register("phone", {
           pattern: {
@@ -77,12 +84,14 @@ export default function UserForm({
           },
         })}
         className="border p-2 w-full rounded"
-        disabled={isSubmitting}
       />
       {errors.phone && <p className="text-red-500">{errors.phone.message}</p>}
       {/* Website */}
-      <label className="block font-medium">Website</label>
+      <label htmlFor="website" className="block font-medium">
+        Website
+      </label>
       <input
+        id="website"
         placeholder="Website"
         {...register("website", {
           pattern: {
@@ -91,29 +100,29 @@ export default function UserForm({
           },
         })}
         className="border p-2 w-full rounded"
-        disabled={isSubmitting}
       />
       {errors.website && (
         <p className="text-red-500">{errors.website.message}</p>
       )}
 
       {/* Company */}
-      <label className="block font-medium">Company</label>
+      <label htmlFor="company" className="block font-medium">
+        Company
+      </label>
       <input
+        id="company"
         placeholder="Company*"
         {...register("companyName", {
           required: "Company is required",
           minLength: { value: 2, message: "Min 2 chars" },
         })}
         className="border p-2 w-full rounded"
-        disabled={isSubmitting}
       />
       {errors.companyName && (
         <p className="text-red-500">{errors.companyName.message}</p>
       )}
       <button
         type="submit"
-        disabled={!isValid || isSubmitting}
         className="bg-primary text-black px-4 py-2 rounded disabled:opacity-50 hover:underline transition cursor-pointer"
       >
         {isSubmitting ? "Submitting..." : "Submit"}
