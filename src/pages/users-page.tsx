@@ -43,7 +43,7 @@ export default function UsersPage() {
   };
 
   if (isLoading) {
-    return <div className="p-6 text-center">Loading...</div>;
+    return <div className="p-6 text-center dark:text-gray-300">Loading...</div>;
   }
 
   if (error) {
@@ -59,14 +59,14 @@ export default function UsersPage() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search by name or email..."
-          className="border px-3 py-2 rounded w-full md:w-1/3"
+          className="border dark:border-gray-600 px-3 py-2 rounded w-full md:w-1/3 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500"
         />
 
         {/* Sort */}
         <select
           value={sort}
           onChange={(e) => setSort(e.target.value as SortType)}
-          className="border px-3 py-2 rounded"
+          className="border dark:border-gray-600 px-3 py-2 rounded bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
         >
           <option value="name-asc">Name A-Z</option>
           <option value="name-desc">Name Z-A</option>
@@ -88,11 +88,11 @@ export default function UsersPage() {
           ))}
         </div>
       ) : (
-        <div className="text-center py-10 text-gray-500">No users found</div>
+        <div className="text-center py-10 text-gray-500 dark:text-gray-400">No users found</div>
       )}
 
       <Modal isOpen={isOpenModal} onClose={closeModal}>
-        <h2 className="text-lg font-semibold mb-3">
+        <h2 className="text-lg font-semibold mb-3 dark:text-gray-100">
           {editingUserId ? "Edit User" : "Create User"}
         </h2>
 

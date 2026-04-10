@@ -32,7 +32,7 @@ export default function UserCard({ user }: Props) {
   return (
     <div
       onClick={() => navigate(`/users/${user.id}`)}
-      className="p-4 border rounded-xl shadow-sm hover:shadow-md transition cursor-pointer"
+      className="p-4 border dark:border-gray-700 rounded-xl shadow-sm hover:shadow-md transition cursor-pointer bg-white dark:bg-gray-900"
     >
       <div className="flex items-center">
         <h2 className="text-lg font-semibold">{user.name}</h2>
@@ -54,7 +54,7 @@ export default function UserCard({ user }: Props) {
           </button>
         </div>
       </div>
-      <p className="text-sm text-gray-500">{user.email}</p>
+      <p className="text-sm text-gray-500 dark:text-gray-400">{user.email}</p>
 
       <div className="mt-2 text-sm">
         <p>

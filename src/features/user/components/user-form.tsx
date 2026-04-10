@@ -40,7 +40,7 @@ export default function UserForm({
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-3">
       {/* Name */}
-      <label htmlFor="name" className="block font-medium">
+      <label htmlFor="name" className="block font-medium dark:text-gray-100">
         Name
       </label>
       <input
@@ -50,11 +50,11 @@ export default function UserForm({
           required: "Name is required",
           minLength: { value: 2, message: "Min 2 chars" },
         })}
-        className="border p-2 w-full rounded"
+        className="border dark:border-gray-600 p-2 w-full rounded bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500"
       />
       {errors.name && <p className="text-red-500">{errors.name.message}</p>}
       {/* Email */}
-      <label htmlFor="email" className="block font-medium">
+      <label htmlFor="email" className="block font-medium dark:text-gray-100">
         Email
       </label>
       <input
@@ -67,11 +67,11 @@ export default function UserForm({
             message: "Invalid email",
           },
         })}
-        className="border p-2 w-full rounded"
+        className="border dark:border-gray-600 p-2 w-full rounded bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500"
       />
       {errors.email && <p className="text-red-500">{errors.email.message}</p>}
       {/* Phone */}
-      <label htmlFor="Phone" className="block font-medium">
+      <label htmlFor="Phone" className="block font-medium dark:text-gray-100">
         Phone
       </label>
       <input
@@ -83,11 +83,11 @@ export default function UserForm({
             message: "Invalid phone number",
           },
         })}
-        className="border p-2 w-full rounded"
+        className="border dark:border-gray-600 p-2 w-full rounded bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500"
       />
       {errors.phone && <p className="text-red-500">{errors.phone.message}</p>}
       {/* Website */}
-      <label htmlFor="website" className="block font-medium">
+      <label htmlFor="website" className="block font-medium dark:text-gray-100">
         Website
       </label>
       <input
@@ -99,14 +99,14 @@ export default function UserForm({
             message: "Invalid URL",
           },
         })}
-        className="border p-2 w-full rounded"
+        className="border dark:border-gray-600 p-2 w-full rounded bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500"
       />
       {errors.website && (
         <p className="text-red-500">{errors.website.message}</p>
       )}
 
       {/* Company */}
-      <label htmlFor="company" className="block font-medium">
+      <label htmlFor="company" className="block font-medium dark:text-gray-100">
         Company
       </label>
       <input
@@ -116,7 +116,7 @@ export default function UserForm({
           required: "Company is required",
           minLength: { value: 2, message: "Min 2 chars" },
         })}
-        className="border p-2 w-full rounded"
+        className="border dark:border-gray-600 p-2 w-full rounded bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500"
       />
       {errors.companyName && (
         <p className="text-red-500">{errors.companyName.message}</p>
