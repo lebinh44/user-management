@@ -9,7 +9,7 @@ import {
   useUpdateUser,
 } from "@/features/user/hooks/use-user-mutation";
 import Modal from "@/components/ui/modal";
-import UserForm from "@/features/user/components/use-form";
+import UserForm from "@/features/user/components/user-form";
 
 export default function UsersPage() {
   const { data, isLoading, error } = useUsers();
@@ -22,8 +22,8 @@ export default function UsersPage() {
 
   const createMutation = useCreateUser();
   const updateMutation = useUpdateUser();
-  const { editingUserId, isOpenModal, closeModal, openCreate, openEdit } =
-    useUserStore();
+  const isSubmitting = createMutation.isPending || updateMutation.isPending;
+  const { editingUserId, isOpenModal, closeModal, openCreate } = useUserStore();
   const editingUser = data?.find((u) => u.id === editingUserId);
 
   const handleSubmit = (formData: UserFormValues) => {
@@ -48,10 +48,6 @@ export default function UsersPage() {
 
   if (error) {
     return <div className="p-6 text-center text-red-500">Error</div>;
-  }
-
-  if (!users.length) {
-    return <div className="p-6 text-center">No users found</div>;
   }
 
   return (
@@ -85,11 +81,16 @@ export default function UsersPage() {
       </button>
 
       {/* List */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {users.map((user) => (
-          <UserCard key={user.id} user={user} />
-        ))}
-      </div>
+      {users.length ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {users.map((user) => (
+            <UserCard key={user.id} user={user} />
+          ))}
+        </div>
+      ) : (
+        <div className="text-center py-10 text-gray-500">No users found</div>
+      )}
+
       <Modal isOpen={isOpenModal} onClose={closeModal}>
         <h2 className="text-lg font-semibold mb-3">
           {editingUserId ? "Edit User" : "Create User"}
@@ -108,6 +109,7 @@ export default function UsersPage() {
               : undefined
           }
           onSubmit={handleSubmit}
+          isSubmitting={isSubmitting}
         />
       </Modal>
     </div>

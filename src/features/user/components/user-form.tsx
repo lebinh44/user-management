@@ -3,10 +3,15 @@ import { UserFormValues } from "../types";
 
 interface Props {
   defaultValues?: UserFormValues;
-  onSubmit: (data: UserFormValues) => void;
+  onSubmit: (data: UserFormValues) => void | Promise<void>;
+  isSubmitting?: boolean;
 }
 
-export default function UserForm({ defaultValues, onSubmit }: Props) {
+export default function UserForm({
+  defaultValues,
+  onSubmit,
+  isSubmitting = false,
+}: Props) {
   const {
     register,
     handleSubmit,
@@ -28,13 +33,14 @@ export default function UserForm({ defaultValues, onSubmit }: Props) {
     try {
       await onSubmit(data);
       onSubmitSuccess();
-    } catch (error) {
+    } catch {
       onSubmitError();
     }
   };
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
+    <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-3">
       {/* Name */}
+      <label className="block font-medium">Name</label>
       <input
         placeholder="Name*"
         {...register("name", {
@@ -42,9 +48,11 @@ export default function UserForm({ defaultValues, onSubmit }: Props) {
           minLength: { value: 2, message: "Min 2 chars" },
         })}
         className="border p-2 w-full rounded"
+        disabled={isSubmitting}
       />
       {errors.name && <p className="text-red-500">{errors.name.message}</p>}
       {/* Email */}
+      <label className="block font-medium">Email</label>
       <input
         placeholder="Email*"
         {...register("email", {
@@ -55,9 +63,11 @@ export default function UserForm({ defaultValues, onSubmit }: Props) {
           },
         })}
         className="border p-2 w-full rounded"
+        disabled={isSubmitting}
       />
       {errors.email && <p className="text-red-500">{errors.email.message}</p>}
       {/* Phone */}
+      <label className="block font-medium">Phone</label>
       <input
         placeholder="Phone"
         {...register("phone", {
@@ -67,9 +77,11 @@ export default function UserForm({ defaultValues, onSubmit }: Props) {
           },
         })}
         className="border p-2 w-full rounded"
+        disabled={isSubmitting}
       />
       {errors.phone && <p className="text-red-500">{errors.phone.message}</p>}
       {/* Website */}
+      <label className="block font-medium">Website</label>
       <input
         placeholder="Website"
         {...register("website", {
@@ -79,12 +91,14 @@ export default function UserForm({ defaultValues, onSubmit }: Props) {
           },
         })}
         className="border p-2 w-full rounded"
+        disabled={isSubmitting}
       />
       {errors.website && (
         <p className="text-red-500">{errors.website.message}</p>
       )}
 
       {/* Company */}
+      <label className="block font-medium">Company</label>
       <input
         placeholder="Company*"
         {...register("companyName", {
@@ -92,17 +106,17 @@ export default function UserForm({ defaultValues, onSubmit }: Props) {
           minLength: { value: 2, message: "Min 2 chars" },
         })}
         className="border p-2 w-full rounded"
+        disabled={isSubmitting}
       />
       {errors.companyName && (
         <p className="text-red-500">{errors.companyName.message}</p>
       )}
       <button
         type="submit"
-        onClick={handleSubmit(handleFormSubmit)}
-        disabled={!isValid}
+        disabled={!isValid || isSubmitting}
         className="bg-primary text-black px-4 py-2 rounded disabled:opacity-50 hover:underline transition cursor-pointer"
       >
-        Submit
+        {isSubmitting ? "Submitting..." : "Submit"}
       </button>
     </form>
   );

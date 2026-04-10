@@ -20,12 +20,15 @@ export const getUserById = async (id: number): Promise<User> => {
   return response.data;
 };
 
-export const createUser = async (data: Partial<User>) => {
+export const createUser = async (data: Partial<User>): Promise<User> => {
   const response = await api.post("/users", data);
   return response.data;
 };
 
-export const updateUser = async (id: number, data: Partial<User>) => {
+export const updateUser = async (
+  id: number,
+  data: Partial<User>
+): Promise<User> => {
   const response = await api.put(`/users/${id}`, data);
   return response.data;
 };
