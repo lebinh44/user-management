@@ -45,7 +45,7 @@ export default function UserDetailPage() {
   );
 
   if (isLoading) {
-    return <div className="p-6 text-center">Loading...</div>;
+    return <div className="p-6 text-center dark:text-gray-300">Loading...</div>;
   }
 
   if (error || !user) {
@@ -64,9 +64,9 @@ export default function UserDetailPage() {
         ← Back
       </button>
 
-      <div className="border rounded-xl p-4 shadow-sm">
-        <h1 className="text-2xl font-bold">{user.name}</h1>
-        <p className="text-gray-500">{user.email}</p>
+      <div className="border dark:border-gray-700 rounded-xl p-4 shadow-sm bg-white dark:bg-gray-900">
+        <h1 className="text-2xl font-bold dark:text-gray-100">{user.name}</h1>
+        <p className="text-gray-500 dark:text-gray-400">{user.email}</p>
 
         <div className="mt-3 text-sm space-y-1">
           <p>
@@ -84,24 +84,24 @@ export default function UserDetailPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Posts column */}
         <div>
-          <h2 className="text-xl font-semibold mb-2">Posts</h2>
+          <h2 className="text-xl font-semibold mb-2 dark:text-gray-100">Posts</h2>
           {postsLoading ? (
-            <div className="text-center text-gray-400 py-4">Loading...</div>
+            <div className="text-center text-gray-400 dark:text-gray-500 py-4">Loading...</div>
           ) : (
             <div className="space-y-2">
               {posts.map((post: Post) => (
-                <div key={post.id} className="border p-3 rounded">
+                <div key={post.id} className="border dark:border-gray-700 p-3 rounded dark:text-gray-200">
                   <p className="font-medium">{post.title}</p>
                 </div>
               ))}
               <div ref={postsBottomRef} className="h-1" />
               {postsFetchingMore && (
-                <div className="text-center text-gray-400 py-2 text-sm">
+                <div className="text-center text-gray-400 dark:text-gray-500 py-2 text-sm">
                   Loading more...
                 </div>
               )}
               {!hasMorePosts && posts.length > 0 && (
-                <div className="text-center text-gray-400 py-2 text-sm">
+                <div className="text-center text-gray-400 dark:text-gray-500 py-2 text-sm">
                   No more posts
                 </div>
               )}
@@ -111,24 +111,24 @@ export default function UserDetailPage() {
 
         {/* Albums column */}
         <div>
-          <h2 className="text-xl font-semibold mb-2">Albums</h2>
+          <h2 className="text-xl font-semibold mb-2 dark:text-gray-100">Albums</h2>
           {albumsLoading ? (
-            <div className="text-center text-gray-400 py-4">Loading...</div>
+            <div className="text-center text-gray-400 dark:text-gray-500 py-4">Loading...</div>
           ) : (
             <div className="space-y-2">
               {albums.map((album: Album) => (
-                <div key={album.id} className="border p-3 rounded">
+                <div key={album.id} className="border dark:border-gray-700 p-3 rounded dark:text-gray-200">
                   {album.title}
                 </div>
               ))}
               <div ref={albumsBottomRef} className="h-1" />
               {albumsFetchingMore && (
-                <div className="text-center text-gray-400 py-2 text-sm">
+                <div className="text-center text-gray-400 dark:text-gray-500 py-2 text-sm">
                   Loading more...
                 </div>
               )}
               {!hasMoreAlbums && albums.length > 0 && (
-                <div className="text-center text-gray-400 py-2 text-sm">
+                <div className="text-center text-gray-400 dark:text-gray-500 py-2 text-sm">
                   No more albums
                 </div>
               )}
